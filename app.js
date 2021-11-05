@@ -16,10 +16,12 @@ app.use(cors())
 app.use(express.json())
 app.use(express.static('public'))
 
-app.use('/api/users', usersRouter)
-app.use('/api/categories', categoriesRouter)
-app.use('/api/transactions', transactionsRouter)
-app.use('/api/sessions', sessionsRouter)
+// временно закомментировано для беспроблемного подключения к базе
+
+// app.use('/api/users', usersRouter)
+// app.use('/api/categories', categoriesRouter)
+// app.use('/api/transactions', transactionsRouter)
+// app.use('/api/sessions', sessionsRouter)
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found' })
