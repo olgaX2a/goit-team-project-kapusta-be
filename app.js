@@ -24,12 +24,20 @@ app.use(express.static('public'))
 // app.use('/api/sessions', sessionsRouter)
 
 app.use((req, res) => {
-  res.status(404).json({ message: 'Not found' })
-})
+  res.status(404).json({
+    status: "error",
+    code: 404,
+    message: "Not Found",
+  });
+});
 
-app.use((err, req, res, next) => {
-  const { status = 500, message = 'Server error' } = err
-  res.status(status).json({ message })
-})
+app.use((error, req, res, next) => {
+  const { status = 500, message = "Server error" } = error;
+  res.status(status).json({
+    status: "error",
+    code: status,
+    message,
+  });
+});
 
 module.exports = app
