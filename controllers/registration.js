@@ -1,4 +1,4 @@
-const { User } = require("../model");
+const { User } = require("../model/user.js");
 const { Conflict } = require("http-errors");
 const { nanoid } = require("nanoid");
 const bcrypt = require("bcryptjs");
@@ -32,4 +32,6 @@ const registration = async (req, res) => {
   });
 };
 
-module.exports = registration;
+module.exports = {
+  registration,
+};

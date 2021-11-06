@@ -31,7 +31,7 @@ const userSchema = Schema(
 );
 
 const joiSchema = Joi.object({
-  email: Joi.string().required(),
+  email: Joi.string().email().required(),
   password: Joi.string().required(),
 });
 

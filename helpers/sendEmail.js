@@ -9,4 +9,6 @@ const sendEmail = async (data) => {
   return await sgMail.send(email);
 };
 
-module.exports = sendEmail;
+module.exports = {
+  sendEmail
+}
