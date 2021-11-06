@@ -1,19 +1,18 @@
-const { Schema, model } = require('mongoose')
+const { Schema, model } = require("mongoose");
+const Joi = require("joi");
 
 const userSchema = Schema(
   {
-    name: {
-      type: String,
-      required: [true, 'Name is required'],
-    },
     password: {
       type: String,
-      required: [true, 'Password is required'],
+      required: [true, "Password is required"],
+      minlength: 8,
     },
     email: {
       type: String,
-      required: [true, 'Email is required'],
+      required: [true, "Email is required"],
       unique: true,
+      minlength: 10,
     },
     token: {
       type: String,
@@ -25,12 +24,20 @@ const userSchema = Schema(
     },
     verifyToken: {
       type: String,
-      required: [true, 'Verify token is required'],
+      required: [true, "Verify token is required"],
     },
   },
-  { versionKey: false, timestamps: true },
-)
+  { versionKey: false, timestamps: true }
+);
 
-const User = model('user', userSchema)
+const joiSchema = Joi.object({
+  email: Joi.string().required(),
+  password: Joi.string().required(),
+});
 
-module.exports = User
+const User = model("user", userSchema);
+
+module.exports = {
+  User,
+  joiSchema,
+};

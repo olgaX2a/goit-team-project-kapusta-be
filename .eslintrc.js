@@ -4,8 +4,7 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: ['standard', 'prettier'],
-  extends: ['plugin:json/recommended'],
+  extends: ['standard','plugin:json/recommended', 'prettier'],
   parserOptions: {
     ecmaVersion: 12,
   },
