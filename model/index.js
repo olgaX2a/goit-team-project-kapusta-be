@@ -1,4 +1,4 @@
-const User = require('./user')
+const {User} = require('./user')
 const Category = require('./category')
 const Transaction = require('./transaction')
 

@@ -1,16 +1,13 @@
 const express = require('express');
 const router = express.Router()
-const { registration} = require("../../controllers/registration");
-const { login } = require("../../controllers/login");
-const { logout } = require("../../controllers/logout");
-const { verify } = require("../../controllers/verify");
+const {registration, login, logout, verify} = require("../../controllers")
 const {
   controllerWrapper,
   validation,
   authenticate,
 } = require("../../middlewares");
-const { joiSchema } = require("../../model/user.js");
 
+const { joiSchema } = require("../../model/user.js");
 router.post(
     "/registration",
     validation(joiSchema),
