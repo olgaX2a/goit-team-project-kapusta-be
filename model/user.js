@@ -5,7 +5,7 @@ const userSchema = Schema(
   {
     name: {
       type: String,
-      required: [true, 'Name is required'],
+      required: [true, "Name is required"],
     },
     password: {
       type: String,
@@ -29,6 +29,10 @@ const userSchema = Schema(
     verifyToken: {
       type: String,
       required: [true, "Verify token is required"],
+    },
+    balance: {
+      type: Number,
+      default: 0.0,
     },
   },
   { versionKey: false, timestamps: true }

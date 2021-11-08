@@ -1,6 +1,12 @@
-const express = require('express');
-const router = express.Router()
-const {registration, login, logout, verify} = require("../../controllers")
+const express = require("express");
+const router = express.Router();
+const {
+  registration,
+  login,
+  logout,
+  verify,
+  balanceUpdate,
+} = require("../../controllers");
 const {
   controllerWrapper,
   validation,
@@ -9,13 +15,14 @@ const {
 
 const { joiSchema } = require("../../model/user.js");
 router.post(
-    "/registration",
-    validation(joiSchema),
-    controllerWrapper(registration)
+  "/registration",
+  validation(joiSchema),
+  controllerWrapper(registration)
 );
 
 router.get("/verify/:verifyToken", controllerWrapper(verify));
 router.post("/login", validation(joiSchema), controllerWrapper(login));
 router.get("/logout", authenticate, controllerWrapper(logout));
+router.patch("/balance", authenticate, controllerWrapper(balanceUpdate));
 
 module.exports = router;
