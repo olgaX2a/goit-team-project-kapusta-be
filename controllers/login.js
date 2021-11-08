@@ -7,7 +7,10 @@ const { SECRET_KEY } = process.env;
 
 const login = async (req, res) => {
   const { name, email, password } = req.body;
-  const user = await User.findOne({ email }, "_id name email password verify");
+  const user = await User.findOne(
+    { email },
+    "_id name email balance password verify"
+  );
   if (!user) {
     throw new NotFound(`Email ${email} not found`);
   }
@@ -17,7 +20,8 @@ const login = async (req, res) => {
   if (!user.verify) {
     throw new BadRequest("Email not verify");
   }
-  const { _id } = user;
+  const { _id, balance } = user;
+
   const payload = {
     _id,
   };
@@ -29,6 +33,7 @@ const login = async (req, res) => {
     data: {
       name,
       token,
+      balance: balance.toFixed(2),
     },
   });
 };
