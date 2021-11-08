@@ -1,4 +1,4 @@
-const { User } = require("../model/user.js");
+const { User } = require("../../model/index");
 const { NotFound } = require("http-errors");
 
 const verify = async (req, res) => {

@@ -1,8 +1,8 @@
-const { User } = require("../model");
+const { User } = require("../../model");
 const { Conflict } = require("http-errors");
 const { nanoid } = require("nanoid");
 const bcrypt = require("bcryptjs");
-const { sendEmail } = require("../helpers/sendEmail");
+const { sendEmail } = require("../../helpers/sendEmail");
 
 const registration = async (req, res) => {
   const { name, email, password } = req.body;
