@@ -3,14 +3,14 @@ const router = express.Router();
 const {
   addTransaction,
   getTransactions,
-} = require("../../controllers/transaction/");
+} = require("../../controllers/transaction/index");
 const { controllerWrapper, authenticate } = require("../../middlewares");
 
-// router.get(
-//   authenticate, joiSchema,
-//   "/:transactionType",
-//   controllerWrapper(getTransactions)
-// );
+router.get(
+  "/:transactionType",
+  authenticate,
+  controllerWrapper(getTransactions)
+);
 router.post(
   "/:transactionType",
   authenticate,
