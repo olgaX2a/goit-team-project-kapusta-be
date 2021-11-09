@@ -1,7 +1,7 @@
 const { User, Transaction } = require("../../model/index");
 
 const getTransactions = async (req, res) => {
-  const { _id } = req.user;
+  const { _id, balance } = req.user;
   const { transactionType } = req.params;
   const transactionsById = await Transaction.find(
     { owner: _id },
@@ -13,6 +13,7 @@ const getTransactions = async (req, res) => {
   res.status(201).json({
     status: "success",
     code: 201,
+    balance,
     data: result,
   });
 };
