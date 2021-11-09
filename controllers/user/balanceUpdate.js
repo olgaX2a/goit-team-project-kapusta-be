@@ -1,4 +1,4 @@
-const { User } = require("../model/user");
+const { User } = require("../../model/index");
 
 const balanceUpdate = async (req, res) => {
   const { _id } = req.user;

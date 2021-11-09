@@ -6,7 +6,7 @@ const {
   logout,
   verify,
   balanceUpdate,
-} = require("../../controllers");
+} = require("../../controllers/user");
 const {
   controllerWrapper,
   validation,
