@@ -1,7 +1,10 @@
-const Transaction = require("../../model/transaction");
+const { BadRequest } = require("http-errors");
 const { nanoid } = require("nanoid");
+const { User, Transaction } = require("../../model/index");
+const { updateBalanceAfterAddTransaction } = require("../../services/index");
 
 const addTransaction = async (req, res) => {
+  const { _id, balance } = req.user;
   const { transactionType } = req.params;
   const { amount, description, category, day, month, year } = req.body;
   const newTransaction = {
@@ -11,6 +14,21 @@ const addTransaction = async (req, res) => {
     ...req.body,
   };
   await Transaction.create(newTransaction);
+
+  const newBalance = updateBalanceAfterAddTransaction(
+    balance,
+    amount,
+    transactionType
+  );
+
+  if (newBalance < 0) {
+    throw new BadRequest("The balance cannot be less than 0.");
+  }
+
+  await User.findByIdAndUpdate(_id, {
+    balance: newBalance,
+  });
+
   res.status(201).json({
     status: "success",
     code: 201,
@@ -22,6 +40,7 @@ const addTransaction = async (req, res) => {
       day,
       month,
       year,
+      balance: newBalance.toFixed(2),
     },
   });
 };
