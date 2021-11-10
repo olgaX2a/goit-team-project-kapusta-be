@@ -16,7 +16,7 @@ const categorySchema = Schema(
     },
   },
   { versionKey: false, timestamps: true },
-)
+);
 
 const Category = model('category', categorySchema)
 

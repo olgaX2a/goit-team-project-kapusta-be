@@ -1,9 +1,9 @@
 const addTransaction = require('./addTransaction');
 const getTransactions = require('./getTransactions');
-const deleteTransactions = require('./deleteTransactions');
+const deleteTransaction = require('./deleteTransaction');
 
 module.exports = {
   addTransaction,
   getTransactions,
-  deleteTransactions,
+  deleteTransaction,
 };
