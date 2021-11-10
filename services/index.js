@@ -1,3 +1,4 @@
 const updateBalanceAfterAddTransaction = require("./updateBalanceAfterAddTransaction");
+const getTotalAmountByMonth = require("./getTotalAmountByMonth");
 
-module.exports = { updateBalanceAfterAddTransaction };
+module.exports = { updateBalanceAfterAddTransaction, getTotalAmountByMonth };

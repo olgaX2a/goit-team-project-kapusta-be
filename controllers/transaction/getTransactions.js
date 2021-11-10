@@ -1,4 +1,5 @@
 const { User, Transaction } = require("../../model/index");
+const { getTotalAmountByMonth } = require("../../services/index");
 
 const getTransactions = async (req, res) => {
   const { _id, balance } = req.user;
@@ -10,10 +11,13 @@ const getTransactions = async (req, res) => {
   const result = transactionsById.filter(
     (transaction) => transaction.transactionType === transactionType
   );
+  const totalAmountByMonth = getTotalAmountByMonth(result);
+  console.log(totalAmountByMonth);
   res.status(201).json({
     status: "success",
     code: 201,
     balance,
+    totalAmountByMonth,
     data: result,
   });
 };
