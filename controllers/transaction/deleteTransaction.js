@@ -4,7 +4,6 @@ const { NotFound } = require('http-errors');
 
 const deleteTransaction = async (req, res) => {
   const { _id, balance } = req.user;
-  console.log(req.user);
   const { transactionId } = req.params;
   const transaction = await Transaction.findOneAndRemove({ _id: transactionId, owner: _id });
 
