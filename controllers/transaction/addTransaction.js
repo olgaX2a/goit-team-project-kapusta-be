@@ -8,7 +8,6 @@ const addTransaction = async (req, res) => {
   const { transactionType } = req.params;
   const { amount, description, category, day, month, year } = req.body;
   const newTransaction = {
-    id: nanoid(),
     owner: req.user._id,
     transactionType,
     ...req.body,
