@@ -1,3 +1,4 @@
 const sendEmail = require('./sendEmail');
+const { INCOME, EXPENSE } = require('./transTypes');
 
-module.exports = { sendEmail};
+module.exports = { sendEmail, INCOME, EXPENSE };
