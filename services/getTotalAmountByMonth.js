@@ -23,22 +23,6 @@ const totalAmount = (result) => {
   );
 };
 
-// const iuiuiisiid = (result) => {
-//   let months = [];
-//   let summary = [];
-//   result.map((res) => {
-//     const reportMonth = res.month;
-//     if (!months.includes(reportMonth)) {
-//       const month = findMonth(result, reportMonth);
-//       const totalResultAmount = totalAmount(month);
-//       months.push(reportMonth);
-//       summary.push({ reportMonth, totalResultAmount });
-//     }
-//     return;
-//   });
-//   return summary;
-// };
-
 const getTotalAmountByMonth = (result) => {
   let years = [];
   let summary = [];
@@ -66,23 +50,16 @@ const getTotalAmountByMonth = (result) => {
     }
     return;
   });
-  return summary;
-};
+  const summarySort = [...summary]
+    .sort((first, second) => second.reportYear - first.reportYear)
+    .sort((first, second) => {
+      if (second.reportYear === first.reportYear) {
+        return second.reportMonth - first.reportMonth;
+      }
+    })
+    .slice(0, 6);
 
-// const getTotalAmountByMonth = (result) => {
-//   let months = [];
-//   let summary = [];
-//   result.map((res) => {
-//     const reportMonth = res.month;
-//     if (!months.includes(reportMonth)) {
-//       const month = findMonth(result, reportMonth);
-//       const totalResultAmount = totalAmount(month);
-//       months.push(reportMonth);
-//       summary.push({ reportMonth, totalResultAmount });
-//     }
-//     return;
-//   });
-//   return summary;
-// };
+  return summarySort;
+};
 
 module.exports = getTotalAmountByMonth;
