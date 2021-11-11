@@ -12,7 +12,6 @@ const getTransactions = async (req, res) => {
     (transaction) => transaction.transactionType === transactionType
   );
   const totalAmountByMonth = getTotalAmountByMonth(result);
-  console.log(totalAmountByMonth);
   res.status(201).json({
     status: "success",
     code: 201,
