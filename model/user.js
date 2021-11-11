@@ -38,15 +38,21 @@ const userSchema = Schema(
   { versionKey: false, timestamps: true }
 );
 
-const joiSchema = Joi.object({
+const userJoiSchema = Joi.object({
   name: Joi.string(),
   email: Joi.string().email().required(),
   password: Joi.string().required(),
+  balance: Joi.number(),
+});
+
+const balanceJoiSchema = Joi.object({
+  balance: Joi.number().required(),
 });
 
 const User = model("user", userSchema);
 
 module.exports = {
   User,
-  joiSchema,
+  userJoiSchema,
+  balanceJoiSchema,
 };

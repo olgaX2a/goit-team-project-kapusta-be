@@ -1,4 +1,5 @@
 const { Schema, SchemaTypes, model } = require("mongoose");
+const Joi = require("joi");
 
 const transactionSchema = Schema(
   {

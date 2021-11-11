@@ -1,4 +1,4 @@
-const { User, Transaction } = require("../../model/index");
+const { Transaction } = require("../../model/index");
 const { getTotalAmountByMonth } = require("../../services/index");
 
 const getTransactions = async (req, res) => {
