@@ -1,5 +1,4 @@
 const { BadRequest } = require("http-errors");
-const { nanoid } = require("nanoid");
 const { User, Transaction } = require("../../model/index");
 const { updateBalanceAfterAddTransaction } = require("../../services/index");
 
@@ -32,14 +31,16 @@ const addTransaction = async (req, res) => {
     status: "success",
     code: 201,
     data: {
-      transactionType,
-      amount: amount.toFixed(2),
-      description,
-      category,
-      day,
-      month,
-      year,
       balance: newBalance.toFixed(2),
+      transaction: {
+        transactionType,
+        amount: amount.toFixed(2),
+        description,
+        category,
+        day,
+        month,
+        year,
+      },
     },
   });
 };
