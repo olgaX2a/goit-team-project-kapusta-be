@@ -11,7 +11,7 @@
   },
   "consumes": ["application/json"],
   "produces": ["application/json"],
-  "servers": [{ "url": "http://localhost:3000/api" }],
+  "servers": [{ "url": "http://goit-kapusta.herokuapp.com/api" }],
   "tags": [
     {
       "name": "Users",
@@ -72,6 +72,29 @@
         }
       }
     },
+    "_VERIFY-TOKEN": "VERIFICATIONS",
+
+    "/users/verify/:verifyToken": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Email verification",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Email verification token",
+            "name": "verifyToken",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    
     "_LOGIN": "LOGIN USERS",
     "/users/login": {
       "post": {
@@ -108,28 +131,6 @@
           "500": {
             "description": "Server error",
             "content": {}
-          }
-        }
-      }
-    },
-    "_VERIFY-TOKEN": "VERIFICATIONS",
-
-    "/users/verify/:verifyToken": {
-      "get": {
-        "tags": ["Users"],
-        "summary": "Email verification",
-        "parameters": [
-          {
-            "in": "path",
-            "description": "Email verification token",
-            "name": "verifyToken",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Successful operation"
           }
         }
       }
@@ -200,6 +201,65 @@
           "401": {
             "description": "Not authorized",
             "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "_TRANSACTIONS": "TRANSACTIONS-GET",
+
+    "/transactions/:transactionType": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Get transaction",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Income|Expense",
+            "name": "Finance",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "_TRANSACTIONS-post": "TRANSACTIONS-POST",
+    
+    "/transactions/:transactionType": {
+      "post": {
+        "tags": ["Transactions"],
+        "summary": "Add transactions",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Add transactions",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionResponse"
+                }
+              }
+            }
           },
           "500": {
             "description": "Server error",
@@ -346,6 +406,94 @@
             "example": "Update balance user's"
           }
         }
+      },
+      "TransactionRequest": {
+        "type": "object",
+        "required": ["amount", "description", "category", "transactionType", "day", "month", "year", "balance"],
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "description": "User's amount",
+            "example": "500"
+          },
+          "description": {
+            "type": "string",
+            "description": "Product description",
+            "example": "Еда"
+          },
+          "category": {
+            "type": "string",
+            "description": "Product category",
+            "example": "Здровье"
+          },
+          "transactionType": {
+            "type": "string"
+          },
+          "day": {
+            "type": "string",
+            "description": "day",
+            "example": "8"
+          },
+          "month": {
+            "type": "string",
+            "description": "month",
+            "example": "3"
+          },
+          "year": {
+            "type": "string",
+            "description": "year",
+            "example": "2020"
+          }
+        }
+      },
+      "TransactionResponse": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "description": "User's amount",
+            "example": "500"
+          },
+          "description": {
+            "type": "string",
+            "description": "User's description",
+            "example": "Еда"
+          },
+          "category": {
+            "type": "string",
+            "description": "User's categories",
+            "example": "Здоровье"
+          },
+          "transactionType": {
+            "type": "string"
+          },
+          "day": {
+            "type": "string",
+            "description": "day",
+            "example": "8"
+          },
+          "month": {
+            "type": "string",
+            "description": "month",
+            "example": "3"
+          },
+          "year": {
+            "type": "string",
+            "description": "year",
+            "example": "2020"
+          }
+        },
+        "example": [
+          {
+            "amount": "50000.00",
+            "description": "Еда",
+            "category": "Здоровье",
+            "day": "12",
+            "month": "1",
+            "year": "2021",
+            "balance": "50000.00"
+        }
+        ]
       }
     },
 
