@@ -1,0 +1,509 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "2.0.2",
+    "title": "Project-kapusta API docs",
+    "description": "API documentation for GoIT project 'Kapusta' ",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "servers": [{ "url": "http://goit-kapusta.herokuapp.com/api" }],
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Users endpoints"
+    },
+    {
+      "name": "Transactions",
+      "description": "Transactions endpoints"
+    },
+    {
+      "name": "Categories",
+      "description": "Categories endpoints"
+    }
+  ],
+
+  "paths": {
+    "_REGISTRATION": "REGISTRATION USERS",
+    "/users/registration": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "User registration",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "_VERIFY-TOKEN": "VERIFICATIONS",
+
+    "/users/verify/:verifyToken": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Email verification",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Email verification token",
+            "name": "verifyToken",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    
+    "_LOGIN": "LOGIN USERS",
+    "/users/login": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "User login",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Login object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "_LOGOUT": "LOGOUT USERS",
+    "/users/logout": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "User logout",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Logout object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogoutRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success logout"
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "_BALANCE": "BALANCE USERS",
+    "/users/balance": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "User balance",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Balance object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BalanceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BalanceResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "_TRANSACTIONS": "TRANSACTIONS-GET",
+
+    "/transactions/:transactionType": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Get transaction",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Income|Expense",
+            "name": "Finance",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "_TRANSACTIONS-post": "TRANSACTIONS-POST",
+    
+    "/transactions/:transactionType": {
+      "post": {
+        "tags": ["Transactions"],
+        "summary": "Add transactions",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Add transactions",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+
+  "components": {
+    "_SCHEMAS": "SCHEMAS",
+    "schemas": {
+      "RegistrationRequest": {
+        "type": "object",
+        "required": ["name", "password", "email"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Ekaterina"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "example": "ekaterina1996@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "r9eLznY8Ft55YK83S7fm"
+          }
+        }
+      },
+      "RegistrationResponse": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Ekaterina"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "example": "ekaterina1996@gmail.com"
+          },
+          "userId": {
+            "type": "integer",
+            "description": "User's id",
+            "example": "618d11adda0fb7ed76d6189"
+          },
+          "VerifyToken": {
+            "type": "string",
+            "description": "User's verification",
+            "example": "-wkbqmLEz-shgOR3LDnqH"
+          }
+        },
+        "example": [
+          {
+            "name": "Ekaterina",
+            "email": "ekaterina1996@gmail.com",
+            "verifyToken": "-wkbqmLEz-shgOR3LDnqH"
+          }
+        ]
+      },
+
+      "LoginRequest": {
+        "type": "object",
+        "required": ["name", "password", "email"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Ekaterina"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "example": "ekaterina1996@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "r9eLznY8Ft55YK83S7fm"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Ekaterina"
+          },
+          "token": {
+            "type": "integer",
+            "description": "User's token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MThkNmJjYjk0ZWRiZDU0YmIwZGU5NzciLCJpYXQiOjE2MzY2NTgxODF9.VkxeHg0rga-XnMZGhe7A6GiSWmMNBWi48bSMJ3Slr8Y"
+          },
+          "balance": {
+            "type": "integer",
+            "description": "User's balance",
+            "example": "100.00"
+          }
+        },
+        "example": [
+          {
+            "name": "Ekaterina",
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MThkNmJjYjk0ZWRiZDU0YmIwZGU5NzciLCJpYXQiOjE2MzY2NTgxODF9.VkxeHg0rga-XnMZGhe7A6GiSWmMNBWi48bSMJ3Slr8Y",
+            "balance": "0.0"
+          }
+        ]
+      },
+
+      "LogoutRequest": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "User's token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MThkMjVjN2I1Yzk0YjMyZWMwMDYzNGMiLCJpYXQiOjE2MzY2NDIwNjB9.MDuFaOH7WEwUnTH13Xdi9zsB9d45SzYL9VeRa4Azt_I"
+          }
+        }
+      },
+
+      "BalanceRequest": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "User's balance",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MThkMjVjN2I1Yzk0YjMyZWMwMDYzNGMiLCJpYXQiOjE2MzY2NDIwNjB9.MDuFaOH7WEwUnTH13Xdi9zsB9d45SzYL9VeRa4Azt_I"
+          }
+        }
+      },
+      "BalanceResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Update balance user's",
+            "example": "Update balance user's"
+          }
+        }
+      },
+      "TransactionRequest": {
+        "type": "object",
+        "required": ["amount", "description", "category", "transactionType", "day", "month", "year", "balance"],
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "description": "User's amount",
+            "example": "500"
+          },
+          "description": {
+            "type": "string",
+            "description": "Product description",
+            "example": "Еда"
+          },
+          "category": {
+            "type": "string",
+            "description": "Product category",
+            "example": "Здровье"
+          },
+          "transactionType": {
+            "type": "string"
+          },
+          "day": {
+            "type": "string",
+            "description": "day",
+            "example": "8"
+          },
+          "month": {
+            "type": "string",
+            "description": "month",
+            "example": "3"
+          },
+          "year": {
+            "type": "string",
+            "description": "year",
+            "example": "2020"
+          }
+        }
+      },
+      "TransactionResponse": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "description": "User's amount",
+            "example": "500"
+          },
+          "description": {
+            "type": "string",
+            "description": "User's description",
+            "example": "Еда"
+          },
+          "category": {
+            "type": "string",
+            "description": "User's categories",
+            "example": "Здоровье"
+          },
+          "transactionType": {
+            "type": "string"
+          },
+          "day": {
+            "type": "string",
+            "description": "day",
+            "example": "8"
+          },
+          "month": {
+            "type": "string",
+            "description": "month",
+            "example": "3"
+          },
+          "year": {
+            "type": "string",
+            "description": "year",
+            "example": "2020"
+          }
+        },
+        "example": [
+          {
+            "amount": "50000.00",
+            "description": "Еда",
+            "category": "Здоровье",
+            "day": "12",
+            "month": "1",
+            "year": "2021",
+            "balance": "50000.00"
+        }
+        ]
+      }
+    },
+
+    "_SECURITY_SCHEMES": "ALL",
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
