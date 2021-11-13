@@ -13,16 +13,21 @@ const {
   authenticate,
 } = require("../../middlewares");
 
-const { joiSchema } = require("../../model/user.js");
+const { userJoiSchema, balanceJoiSchema } = require("../../model/user.js");
 router.post(
   "/registration",
-  validation(joiSchema),
+  validation(userJoiSchema),
   controllerWrapper(registration)
 );
 
 router.get("/verify/:verifyToken", controllerWrapper(verify));
-router.post("/login", validation(joiSchema), controllerWrapper(login));
+router.post("/login", validation(userJoiSchema), controllerWrapper(login));
 router.get("/logout", authenticate, controllerWrapper(logout));
-router.patch("/balance", authenticate, controllerWrapper(balanceUpdate));
+router.patch(
+  "/balance",
+  authenticate,
+  validation(balanceJoiSchema),
+  controllerWrapper(balanceUpdate)
+);
 
 module.exports = router;
