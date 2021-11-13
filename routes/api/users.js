@@ -16,7 +16,7 @@ router.post('/registration', validation(userJoiSchema), controllerWrapper(regist
 router.get('/verify/:verifyToken', controllerWrapper(verify));
 router.post('/login', validation(userJoiSchema), controllerWrapper(login));
 router.get('/current', authenticate, controllerWrapper(currentUser));
-router.get('/logout', authenticate, controllerWrapper(logout));
+router.post('/logout', authenticate, controllerWrapper(logout));
 router.patch(
   '/balance',
   authenticate,
