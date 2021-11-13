@@ -3,6 +3,8 @@ const { Conflict } = require("http-errors");
 const { nanoid } = require("nanoid");
 const bcrypt = require("bcryptjs");
 const { sendEmail } = require("../../helpers/sendEmail");
+const { sendSampleEmail } = require("../../services/sendSampleEmail");
+
 
 const registration = async (req, res) => {
   const { name, email, password } = req.body;
@@ -21,10 +23,10 @@ const registration = async (req, res) => {
   const emailVerify = {
     to: email,
     subject: "Сonfirmation of registration",
-    html: `<a href='http://localhost:3000/api/users/verify/${verifyToken}' target='_blank'>Confirm email</a>`,
+    html: `${sendSampleEmail(verifyToken)}`,
   };
   await sendEmail(emailVerify);
-  console.log(emailVerify);
+
   res.status(201).json({
     status: "success",
     code: 201,
