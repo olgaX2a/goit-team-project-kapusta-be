@@ -12,8 +12,8 @@ mongoose
   })
   .then(() => {
     console.log('Database connection successful');
-    app.listen(PORT);
-    // app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
+    // app.listen(PORT);
+    app.listen(PORT, () => console.log(`http://localhost:${PORT}/api-docs`));
   })
 
   .catch(error => {
