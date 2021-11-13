@@ -1,4 +1,4 @@
-const getCategory = require('../categories/getCategory');
+const getCategory = require('./getCategory');
 
 module.exports = {
   getCategory,
