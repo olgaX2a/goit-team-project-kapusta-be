@@ -16,25 +16,22 @@ const findMonth = (result, numberOfMonth) => {
   }, []);
 };
 
-const totalAmount = (result) => {
-  return result.reduce(
-    (amountByMonth, transaction) => amountByMonth + transaction.amount,
-    0
-  );
+const totalAmount = result => {
+  return result.reduce((amountByMonth, transaction) => amountByMonth + transaction.amount, 0);
 };
 
-const getTotalAmountByMonth = (result) => {
+const getTotalAmountByMonth = result => {
   let years = [];
   let summary = [];
 
-  result.map((res) => {
+  result.map(res => {
     const reportYear = res.year;
     const year = findYear(result, reportYear);
 
     if (!years.includes(reportYear)) {
       let months = [];
 
-      year.map((y) => {
+      year.map(y => {
         const reportMonth = y.month;
 
         if (!months.includes(reportMonth)) {
