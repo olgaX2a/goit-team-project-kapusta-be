@@ -19,15 +19,12 @@ router.get('/verify/:verifyToken', controllerWrapper(verify));
 
 router.post('/login', validation(userJoiSchema), controllerWrapper(login));
 router.get('/current', authenticate, controllerWrapper(currentUser));
-
+router.post('/logout', authenticate, controllerWrapper(logout));
 router.patch(
   '/balance',
   authenticate,
   validation(balanceJoiSchema),
   controllerWrapper(balanceUpdate),
 );
-
-router.post('/logout', authenticate, controllerWrapper(logout));
-
 
 module.exports = router;
