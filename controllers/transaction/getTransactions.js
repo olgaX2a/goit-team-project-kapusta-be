@@ -1,17 +1,15 @@
-const { User, Transaction } = require("../../model/index");
+const { transactionFind } = require('../../services/index');
 
 const getTransactions = async (req, res) => {
   const { _id, balance } = req.user;
   const { transactionType } = req.params;
-  const transactionsById = await Transaction.find(
-    { owner: _id },
-    "_id amount description category transactionType day month year"
-  );
+
+  const transactionsById = await transactionFind({ owner: _id });
   const result = transactionsById.filter(
-    (transaction) => transaction.transactionType === transactionType
+    transaction => transaction.transactionType === transactionType,
   );
   res.status(201).json({
-    status: "success",
+    status: 'success',
     code: 201,
     balance,
     data: result,

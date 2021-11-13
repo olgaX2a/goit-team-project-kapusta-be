@@ -19,7 +19,7 @@ app.use(express.static('public'));
 // временно закомментировано для беспроблемного подключения к базе
 
 app.use('/api/users', usersRouter);
-// app.use('/api/categories', categoriesRouter)
+// app.use('/api/categories', categoriesRouter);
 app.use('/api/transactions', transactionsRouter);
 // app.use('/api/sessions', sessionsRouter)
 
