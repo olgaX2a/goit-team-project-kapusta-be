@@ -33,8 +33,12 @@
       "post": {
         "tags": ["Users"],
         "summary": "User registration",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [],
-        "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "Registration's object",
           "required": true,
@@ -74,10 +78,15 @@
     },
     "_VERIFY-TOKEN": "VERIFICATIONS",
 
-    "/users/verify/:verifyToken": {
+    "/users/verify/{verifyToken}": {
       "get": {
         "tags": ["Users"],
         "summary": "Email verification",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -89,7 +98,14 @@
         ],
         "responses": {
           "201": {
-            "description": "Successful operation"
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerifyToken"
+                }
+              }
+            }
           }
         }
       }
@@ -101,7 +117,11 @@
         "tags": ["Users"],
         "summary": "User login",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "requestBody": {
           "description": "Login object",
           "required": true,
@@ -142,7 +162,11 @@
         "tags": ["Users"],
         "summary": "User logout",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "requestBody": {
           "description": "Logout object",
           "required": true,
@@ -175,7 +199,11 @@
         "tags": ["Users"],
         "summary": "User balance",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "requestBody": {
           "description": "Balance object",
           "required": true,
@@ -210,15 +238,21 @@
       }
     },
     "_TRANSACTIONS": "TRANSACTIONS-GET",
-
-    "/transactions/:transactionType": {
+    
+    "/transactions/{transactionType}": {
       "get": {
         "tags": ["Transactions"],
-        "summary": "Get transaction",
+        "summary": "Get transactions expense ore income",
+        "operationId": "transactionType",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
-            "description": "Income|Expense",
+            "description": "Choose income or expense",
             "name": "Finance",
             "required": true,
             "type": "string"
@@ -226,19 +260,42 @@
         ],
         "responses": {
           "201": {
-            "description": "Successful operation"
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "_schema": {
+                  "$ref": "#/components/schemas/TransactionRequest"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid type specified"
+          },
+          "404": {
+            "description": "Type not found"
           }
         }
-      }
-    },
-    "_TRANSACTIONS-post": "TRANSACTIONS-POST",
-    
-    "/transactions/:transactionType": {
+      },
       "post": {
         "tags": ["Transactions"],
-        "summary": "Add transactions",
-        "parameters": [],
-        "security": [{ "Bearer": [] }],
+        "summary": "Add transactions expense ore income",
+        "operationId": "Add transactions expense ore income",
+        "_parameters": [
+          {
+            "in": "path",
+            "description": "Choose income or expense",
+            "name": "Finance",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "parameters":[],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "requestBody": {
           "description": "Add transactions",
           "required": true,
@@ -256,10 +313,56 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TransactionResponse"
+                  "$ref": "#/components/schemas/TransactionResponse",
+                  "example": {
+                    "amount": 50000.00,
+                    "description": "Еда",
+                    "category": "Здоровье",
+                    "day": "12",
+                    "month": "1",
+                    "year": "2021",
+                    "balance": 50000.00
+                  }
                 }
               }
             }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+    }
+    },
+    "_TRANSACTIONS-delete": "TRANSACTIONS-Delete",
+    "/transactions/{transactionId}": {
+      "delete": {
+        "tags": ["Transactions"],
+        "summary": "Delete transactions",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+         {  "name": "transactionId",
+            "in": "path",
+            "description": "Delete transactionId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "_requestBody": {
+          "description": "Delete transactions",
+          "required": true,
+          "content": {
+            "application/json": {
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation"
           },
           "500": {
             "description": "Server error",
@@ -356,6 +459,11 @@
             "description": "User's name",
             "example": "Ekaterina"
           },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "example": "ekaterina1996@gmail.com"
+          },
           "token": {
             "type": "integer",
             "description": "User's token",
@@ -364,14 +472,15 @@
           "balance": {
             "type": "integer",
             "description": "User's balance",
-            "example": "100.00"
+            "example": 100.00
           }
         },
         "example": [
           {
             "name": "Ekaterina",
+            "email": "ekaterina1996@gmail.com",
             "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MThkNmJjYjk0ZWRiZDU0YmIwZGU5NzciLCJpYXQiOjE2MzY2NTgxODF9.VkxeHg0rga-XnMZGhe7A6GiSWmMNBWi48bSMJ3Slr8Y",
-            "balance": "0.0"
+            "balance": 0.0
           }
         ]
       },
@@ -390,10 +499,10 @@
       "BalanceRequest": {
         "type": "object",
         "properties": {
-          "token": {
-            "type": "string",
+          "balance": {
+            "type": "integer",
             "description": "User's balance",
-            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MThkMjVjN2I1Yzk0YjMyZWMwMDYzNGMiLCJpYXQiOjE2MzY2NDIwNjB9.MDuFaOH7WEwUnTH13Xdi9zsB9d45SzYL9VeRa4Azt_I"
+            "example": 50000
           }
         }
       },
@@ -409,50 +518,11 @@
       },
       "TransactionRequest": {
         "type": "object",
-        "required": ["amount", "description", "category", "transactionType", "day", "month", "year", "balance"],
         "properties": {
           "amount": {
             "type": "integer",
             "description": "User's amount",
-            "example": "500"
-          },
-          "description": {
-            "type": "string",
-            "description": "Product description",
-            "example": "Еда"
-          },
-          "category": {
-            "type": "string",
-            "description": "Product category",
-            "example": "Здровье"
-          },
-          "transactionType": {
-            "type": "string"
-          },
-          "day": {
-            "type": "string",
-            "description": "day",
-            "example": "8"
-          },
-          "month": {
-            "type": "string",
-            "description": "month",
-            "example": "3"
-          },
-          "year": {
-            "type": "string",
-            "description": "year",
-            "example": "2020"
-          }
-        }
-      },
-      "TransactionResponse": {
-        "type": "object",
-        "properties": {
-          "amount": {
-            "type": "integer",
-            "description": "User's amount",
-            "example": "500"
+            "example": 500
           },
           "description": {
             "type": "string",
@@ -464,8 +534,9 @@
             "description": "User's categories",
             "example": "Здоровье"
           },
-          "transactionType": {
-            "type": "string"
+          "TransactionType":{
+              "type":"string",
+              "enum": ["income", "expense"]
           },
           "day": {
             "type": "string",
@@ -483,27 +554,77 @@
             "example": "2020"
           }
         },
-        "example": [
+        "example": 
           {
-            "amount": "50000.00",
-            "description": "Еда",
+            "amount": 50000.00,
+            "description": "БАНЬКА",
             "category": "Здоровье",
+            "transactionType":"income ore expense",
             "day": "12",
             "month": "1",
-            "year": "2021",
-            "balance": "50000.00"
+            "year": "2021"
         }
-        ]
+        
+      },
+      "TransactionResponse": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "description": "User's amount",
+            "example": 500
+          },
+          "description": {
+            "type": "string",
+            "description": "User's description",
+            "example": "Еда"
+          },
+          "category": {
+            "type": "string",
+            "description": "User's categories",
+            "example": "Здоровье"
+          },
+          "transactionType":{
+              "type":"string",
+              "enum": ["income", "expense"]
+          },
+          "day": {
+            "type": "string",
+            "description": "day",
+            "example": "8"
+          },
+          "month": {
+            "type": "string",
+            "description": "month",
+            "example": "3"
+          },
+          "year": {
+            "type": "string",
+            "description": "year",
+            "example": "2020"
+          }
+        },
+        "example": 
+          {
+            "amount": 50000.00,
+            "description": "БАНЬКА",
+            "category": "Здоровье",
+            "transactionType":"income ore expense",
+            "day": "12",
+            "month": "1",
+            "year": "2021"
+        }
+        
       }
     },
-
-    "_SECURITY_SCHEMES": "ALL",
+             "_SECURITY_SCHEMES": "ALL",
     "securitySchemes": {
-      "Bearer": {
+      "BearerAuth": {
         "type": "http",
         "scheme": "bearer",
         "bearerFormat": "JWT"
       }
-    }
+    },
+    "security": []
   }
 }

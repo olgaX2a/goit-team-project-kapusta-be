@@ -17,7 +17,7 @@ router.patch(
   controllerWrapper(balanceUpdate),
 );
 
-router.post('/login', validation(joiSchema), controllerWrapper(login));
+router.post('/login', validation(userJoiSchema), controllerWrapper(login));
 router.post('/logout', authenticate, controllerWrapper(logout));
 router.patch('/balance', authenticate, controllerWrapper(balanceUpdate));
 
