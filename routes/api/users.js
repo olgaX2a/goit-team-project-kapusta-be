@@ -1,33 +1,30 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
+
 const {
   registration,
   login,
   logout,
   verify,
   balanceUpdate,
-} = require("../../controllers/user");
-const {
-  controllerWrapper,
-  validation,
-  authenticate,
-} = require("../../middlewares");
+  currentUser,
+} = require('../../controllers/user');
 
-const { userJoiSchema, balanceJoiSchema } = require("../../model/user.js");
-router.post(
-  "/registration",
-  validation(userJoiSchema),
-  controllerWrapper(registration)
-);
+const { controllerWrapper, validation, authenticate } = require('../../middlewares');
 
-router.get("/verify/:verifyToken", controllerWrapper(verify));
-router.post("/login", validation(userJoiSchema), controllerWrapper(login));
-router.get("/logout", authenticate, controllerWrapper(logout));
+const { userJoiSchema, balanceJoiSchema } = require('../../model/user.js');
+router.post('/registration', validation(userJoiSchema), controllerWrapper(registration));
+
+router.get('/verify/:verifyToken', controllerWrapper(verify));
+
+router.post('/login', validation(userJoiSchema), controllerWrapper(login));
+router.get('/current', authenticate, controllerWrapper(currentUser));
+router.post('/logout', authenticate, controllerWrapper(logout));
 router.patch(
-  "/balance",
+  '/balance',
   authenticate,
   validation(balanceJoiSchema),
-  controllerWrapper(balanceUpdate)
+  controllerWrapper(balanceUpdate),
 );
 
 module.exports = router;

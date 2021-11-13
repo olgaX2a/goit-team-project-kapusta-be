@@ -4,14 +4,14 @@ const {
   addTransaction,
   getTransactions,
   deleteTransaction,
-  getCategory,
+  getAllTransactions,
+
 } = require('../../controllers/transaction/index');
 const { controllerWrapper, authenticate } = require('../../middlewares');
 
 router.get('/:transactionType', authenticate, controllerWrapper(getTransactions));
-router.get('/categories/:transactionType', authenticate, controllerWrapper(getCategory));
+router.get('/', authenticate, controllerWrapper(getAllTransactions));
 router.post('/:transactionType', authenticate, controllerWrapper(addTransaction));
-
 router.delete('/:transactionId', authenticate, controllerWrapper(deleteTransaction));
 
 module.exports = router;
