@@ -101,11 +101,12 @@
             "description": "Successful operation",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/VerifyToken"
-                }
               }
             }
+          },
+          "400": {
+            "description": "Invalid token",
+            "content": {}
           }
         }
       }
@@ -145,8 +146,44 @@
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)",
+            "description": "Invalid name/email/password supplied",
             "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/users/current": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Current user. Substitute the token for verification",
+        "parameters":[],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token",
+            "content": {}
+          },
+          "404": {
+            "description": "User not found"
           },
           "500": {
             "description": "Server error",
@@ -167,17 +204,6 @@
             "BearerAuth": []
           }
         ],
-        "requestBody": {
-          "description": "Logout object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LogoutRequest"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "Success logout"
@@ -238,11 +264,45 @@
       }
     },
     "_TRANSACTIONS": "TRANSACTIONS-GET",
-    
+    "/transactions/": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Get all transactions for all time. Substitute the token for verification",
+        "parameters":[],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token",
+            "content": {}
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
     "/transactions/{transactionType}": {
       "get": {
         "tags": ["Transactions"],
-        "summary": "Get transactions expense ore income",
+        "summary": "Get transactions expense ore income. Substitute the token for verification",
         "operationId": "transactionType",
         "security": [
           {
@@ -251,8 +311,8 @@
         ],
         "parameters": [
           {
-            "in": "path",
-            "description": "Choose income or expense",
+            "in": "transactionType",
+            "description": "Choose income ore expense",
             "name": "Finance",
             "required": true,
             "type": "string"
@@ -272,6 +332,10 @@
           "400": {
             "description": "Invalid type specified"
           },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          },
           "404": {
             "description": "Type not found"
           }
@@ -279,7 +343,7 @@
       },
       "post": {
         "tags": ["Transactions"],
-        "summary": "Add transactions expense ore income",
+        "summary": "Add transactions expense ore income.Substitute the token for verification",
         "operationId": "Add transactions expense ore income",
         "_parameters": [
           {
@@ -327,6 +391,16 @@
               }
             }
           },
+          "400": {
+            "description": "Invalid type specified"
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          },
+          "404": {
+            "description": "Type not found"
+          },
           "500": {
             "description": "Server error",
             "content": {}
@@ -338,7 +412,7 @@
     "/transactions/{transactionId}": {
       "delete": {
         "tags": ["Transactions"],
-        "summary": "Delete transactions",
+        "summary": "Delete transactions.Substitute the token for verification",
         "security": [
           {
             "BearerAuth": []
@@ -363,6 +437,56 @@
         "responses": {
           "201": {
             "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid type specified"
+          },
+          "404": {
+            "description": "TransactionId not found"
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/categories/category": {
+      "get": {
+        "tags": ["Categories"],
+        "summary": "Get all categories for all time. Substitute the token for verification",
+        "_parameters":[
+          {
+            "in": "category",
+            "description": "Select a category",
+            "name": "category",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "parameters":[],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token",
+            "content": {}
+          },
+          "404": {
+            "description": "User not found"
           },
           "500": {
             "description": "Server error",
@@ -481,6 +605,28 @@
             "email": "ekaterina1996@gmail.com",
             "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MThkNmJjYjk0ZWRiZDU0YmIwZGU5NzciLCJpYXQiOjE2MzY2NTgxODF9.VkxeHg0rga-XnMZGhe7A6GiSWmMNBWi48bSMJ3Slr8Y",
             "balance": 0.0
+          }
+        ]
+      },
+
+      "CurrentResponse": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Ekaterina"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "example": "ekaterina1996@gmail.com"
+          }
+        },
+        "example": [
+          {
+            "name": "Ekaterina",
+            "email": "ekaterina1996@gmail.com"
           }
         ]
       },
@@ -609,6 +755,67 @@
             "amount": 50000.00,
             "description": "БАНЬКА",
             "category": "Здоровье",
+            "transactionType":"income ore expense",
+            "day": "12",
+            "month": "1",
+            "year": "2021"
+        }
+        
+      },
+
+      "CategoryRequest": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string"
+          }
+        },
+        "example": 
+          {
+            "category": "Select category"
+        }
+        
+      },
+      "CategoryResponse": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "description": "User's amount",
+            "example": 500
+          },
+          "description": {
+            "type": "string",
+            "description": "User's description",
+            "example": "Еда"
+          },
+          "category": {
+            "type": "string"
+          },
+          "transactionType":{
+              "type":"string",
+              "description": "User's type"
+          },
+          "day": {
+            "type": "string",
+            "description": "day",
+            "example": "8"
+          },
+          "month": {
+            "type": "string",
+            "description": "month",
+            "example": "3"
+          },
+          "year": {
+            "type": "string",
+            "description": "year",
+            "example": "2020"
+          }
+        },
+        "example": 
+          {
+            "amount": 50000.00,
+            "description": "БАНЬКА",
             "transactionType":"income ore expense",
             "day": "12",
             "month": "1",
