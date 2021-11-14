@@ -311,11 +311,12 @@
         ],
         "parameters": [
           {
-            "in": "transactionType",
+            "in": "path",
             "description": "Choose income ore expense",
             "name": "Finance",
             "required": true,
-            "type": "string"
+            "type":"string",
+            "enum":["income", "expense"]
           }
         ],
         "responses": {
@@ -324,7 +325,7 @@
             "content": {
               "application/json": {
                 "_schema": {
-                  "$ref": "#/components/schemas/TransactionRequest"
+                  "$ref": "#/components/schemas/TransactionResponse"
                 }
               }
             }
@@ -345,15 +346,6 @@
         "tags": ["Transactions"],
         "summary": "Add transactions expense ore income.Substitute the token for verification",
         "operationId": "Add transactions expense ore income",
-        "_parameters": [
-          {
-            "in": "path",
-            "description": "Choose income or expense",
-            "name": "Finance",
-            "required": true,
-            "type": "string"
-          }
-        ],
         "parameters":[],
         "security": [
           {
@@ -451,20 +443,25 @@
         }
       }
     },
-    "/categories/category": {
+    "/categories/{category}": {
       "get": {
         "tags": ["Categories"],
         "summary": "Get all categories for all time. Substitute the token for verification",
-        "_parameters":[
-          {
-            "in": "category",
-            "description": "Select a category",
-            "name": "category",
+        "parameters":[
+          { "name": "day",
+            "in": "path",
+            "description": "day",
+            "required": true,
+            "type": "string"
+          },
+          { "name": "month",
+            "in": "path",
+            "description": "month",
             "required": true,
             "type": "string"
           }
         ],
-        "parameters":[],
+        "_parameters":[],
         "security": [
           {
             "BearerAuth": []
@@ -681,7 +678,7 @@
             "example": "Здоровье"
           },
           "TransactionType":{
-              "type":"string",
+              "type":"boolean",
               "enum": ["income", "expense"]
           },
           "day": {
@@ -731,7 +728,7 @@
             "example": "Здоровье"
           },
           "transactionType":{
-              "type":"string",
+              "type":"boolean",
               "enum": ["income", "expense"]
           },
           "day": {
@@ -799,11 +796,13 @@
           "day": {
             "type": "string",
             "description": "day",
+            "required": true,
             "example": "8"
           },
           "month": {
             "type": "string",
             "description": "month",
+            "required": true,
             "example": "3"
           },
           "year": {
