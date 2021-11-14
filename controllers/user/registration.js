@@ -23,7 +23,7 @@ const registration = async (req, res) => {
   const emailVerify = {
     to: email,
     subject: "Сonfirmation of registration",
-    html: `${sendSampleEmail(verifyToken)}`,
+    html: `${sendSampleEmail(verifyToken, email)}`,
   };
   await sendEmail(emailVerify);
 
