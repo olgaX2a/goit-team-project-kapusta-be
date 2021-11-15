@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
-require('dotenv').config()
+const path = require("path");
+require('dotenv').config({ path: path.join(__dirname, "../.env") })
 
 const app = require('../app')
 
@@ -13,7 +14,7 @@ mongoose
   .then(() => {
     console.log('Database connection successful');
     // app.listen(PORT);
-    app.listen(PORT, () => console.log(`http://localhost:${PORT}/api-docs`));
+    app.listen(PORT, () => console.log(`http://localhost:${PORT}/api-docs`) );
   })
 
   .catch(error => {
