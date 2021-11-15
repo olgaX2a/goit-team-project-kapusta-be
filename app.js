@@ -3,6 +3,7 @@ const logger = require('morgan');
 const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
+const path = require("path");
 
 const usersRouter = require('./routes/api/users');
 const categoriesRouter = require('./routes/api/categories');
