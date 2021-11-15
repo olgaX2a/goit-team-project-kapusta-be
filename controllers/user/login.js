@@ -31,7 +31,7 @@ const login = async (req, res) => {
       userName,
       userEmail,
       token,
-      balance: balance.toFixed(2),
+      balance,
     },
   });
 };
