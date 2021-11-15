@@ -10,6 +10,8 @@ const getCategory = async (req, res) => {
     .filter(transaction => transaction.year === year)
     .filter(transaction => transaction.month === month);
 
+  console.log(allTransactionsByUser);
+
   const totalAmountTransactionsByReportMonth =
     totalAmountTransactionByOneMonth(allTransactionsByMonth);
 
