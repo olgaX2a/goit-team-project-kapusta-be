@@ -3,6 +3,6 @@ const router = express.Router();
 const { getCategory } = require('../../controllers/categories/index');
 const { controllerWrapper, authenticate } = require('../../middlewares');
 
-router.get('/:transactionType/:year/:month', authenticate, controllerWrapper(getCategory));
+router.get('/', authenticate, controllerWrapper(getCategory));
 
 module.exports = router;
