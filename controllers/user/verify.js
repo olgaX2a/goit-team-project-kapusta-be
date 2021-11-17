@@ -1,18 +1,19 @@
 const { User } = require('../../model/index');
-const { NotFound } = require('http-errors');
+const path = require('path');
 
 const verify = async (req, res) => {
   const { verifyToken } = req.params;
   const user = await User.findOne({ verifyToken });
+
   if (!user) {
-    throw new NotFound('User not found');
+    const errorVerifyHtml = path.join(__dirname, '../../templates', 'errorVerifyPage.html');
+    res.sendFile(errorVerifyHtml);
+    return;
   }
   await User.findByIdAndUpdate(user._id, { verifyToken: null, verify: true });
-  res.json({
-    status: 'success',
-    code: 200,
-    message: 'Email verify success',
-  });
+  const verifyHtml = path.join(__dirname, '../../templates', 'verifyPage.html');
+  res.sendFile(verifyHtml);
+  res.status(200);
 };
 
 module.exports = verify;
