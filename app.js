@@ -9,7 +9,6 @@ const usersRouter = require('./routes/api/users');
 const categoriesRouter = require('./routes/api/categories');
 const transactionsRouter = require('./routes/api/transactions');
 const sessionsRouter = require('./routes/api/sessions');
-const usersRouterGoogle = require('./routes/api/users-google');
 
 const app = express();
 
@@ -27,7 +26,6 @@ app.use('/api/categories', categoriesRouter);
 app.use('/api/transactions', transactionsRouter);
 // app.use('/api/sessions', sessionsRouter);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use('/api/users-google', usersRouterGoogle);
 
 app.use((req, res) => {
   res.status(404).json({

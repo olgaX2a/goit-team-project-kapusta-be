@@ -100,8 +100,7 @@
           "201": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-              }
+              "application/json": {}
             }
           },
           "400": {
@@ -111,7 +110,7 @@
         }
       }
     },
-    
+
     "_LOGIN": "LOGIN USERS",
     "/users/login": {
       "post": {
@@ -161,7 +160,7 @@
       "get": {
         "tags": ["Users"],
         "summary": "Current user. Substitute the token for verification",
-        "parameters":[],
+        "parameters": [],
         "security": [
           {
             "BearerAuth": []
@@ -263,12 +262,46 @@
         }
       }
     },
+    "/users/google": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Google authentication. Request not happening due to CORS",
+        "components": {
+          "securitySchemes": {
+            "oAuth2AuthCode": {
+              "type": "oauth2",
+              "description": "Google OAuth",
+              "flows": {
+                "implicit": {
+                  "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+                  "scopes": {
+                    "security": {
+                      "oAuth2AuthCode": ["write_pets"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {}
+          },
+          "403": {
+            "description": "Not registered or registered with postman",
+            "content": {}
+          }
+        }
+      }
+    },
     "_TRANSACTIONS": "TRANSACTIONS-GET",
     "/transactions/": {
       "get": {
         "tags": ["Transactions"],
         "summary": "Get all transactions for all time. Substitute the token for verification",
-        "parameters":[],
+        "parameters": [],
         "security": [
           {
             "BearerAuth": []
@@ -302,7 +335,7 @@
     "/transactions/{transactionType}": {
       "get": {
         "tags": ["Transactions"],
-        "summary": "Get transactions expense ore income. Substitute the token for verification",
+        "summary": "Get transactions expense or income. Substitute the token for verification",
         "operationId": "transactionType",
         "security": [
           {
@@ -312,11 +345,11 @@
         "parameters": [
           {
             "in": "path",
-            "description": "Choose income ore expense",
-            "name": "Finance",
+            "description": "Choose income or expense",
+            "name": "transactionType",
             "required": true,
-            "type":"string",
-            "enum":["income", "expense"]
+            "type": "string",
+            "enum": ["income", "expense"]
           }
         ],
         "responses": {
@@ -344,9 +377,9 @@
       },
       "post": {
         "tags": ["Transactions"],
-        "summary": "Add transactions expense ore income.Substitute the token for verification",
-        "operationId": "Add transactions expense ore income",
-        "parameters":[],
+        "summary": "Add transactions expense or income.Substitute the token for verification",
+        "operationId": "Add transactions expense or income",
+        "parameters": [],
         "security": [
           {
             "BearerAuth": []
@@ -371,13 +404,13 @@
                 "schema": {
                   "$ref": "#/components/schemas/TransactionResponse",
                   "example": {
-                    "amount": 50000.00,
+                    "amount": 50000.0,
                     "description": "Еда",
                     "category": "Здоровье",
                     "day": "12",
                     "month": "1",
                     "year": "2021",
-                    "balance": 50000.00
+                    "balance": 50000.0
                   }
                 }
               }
@@ -398,7 +431,7 @@
             "content": {}
           }
         }
-    }
+      }
     },
     "_TRANSACTIONS-delete": "TRANSACTIONS-Delete",
     "/transactions/{transactionId}": {
@@ -411,7 +444,8 @@
           }
         ],
         "parameters": [
-         {  "name": "transactionId",
+          {
+            "name": "transactionId",
             "in": "path",
             "description": "Delete transactionId",
             "required": true,
@@ -422,8 +456,7 @@
           "description": "Delete transactions",
           "required": true,
           "content": {
-            "application/json": {
-            }
+            "application/json": {}
           }
         },
         "responses": {
@@ -443,25 +476,11 @@
         }
       }
     },
-    "/categories/{category}": {
+    "/categories/": {
       "get": {
         "tags": ["Categories"],
-        "summary": "Get all categories for all time. Substitute the token for verification",
-        "parameters":[
-          { "name": "day",
-            "in": "path",
-            "description": "day",
-            "required": true,
-            "type": "string"
-          },
-          { "name": "month",
-            "in": "path",
-            "description": "month",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "_parameters":[],
+        "summary": "Get all categories for all time. Substitute the token for verification. For more detailed information, specify the day, month, year in the request body",
+        "parameters": [],
         "security": [
           {
             "BearerAuth": []
@@ -593,7 +612,7 @@
           "balance": {
             "type": "integer",
             "description": "User's balance",
-            "example": 100.00
+            "example": 100.0
           }
         },
         "example": [
@@ -677,9 +696,9 @@
             "description": "User's categories",
             "example": "Здоровье"
           },
-          "TransactionType":{
-              "type":"boolean",
-              "enum": ["income", "expense"]
+          "TransactionType": {
+            "type": "boolean",
+            "enum": ["income", "expense"]
           },
           "day": {
             "type": "string",
@@ -697,17 +716,15 @@
             "example": "2020"
           }
         },
-        "example": 
-          {
-            "amount": 50000.00,
-            "description": "БАНЬКА",
-            "category": "Здоровье",
-            "transactionType":"income ore expense",
-            "day": "12",
-            "month": "1",
-            "year": "2021"
+        "example": {
+          "amount": 50000.0,
+          "description": "БАНЬКА",
+          "category": "Здоровье",
+          "transactionType": "income or expense",
+          "day": "12",
+          "month": "1",
+          "year": "2021"
         }
-        
       },
       "TransactionResponse": {
         "type": "object",
@@ -727,9 +744,9 @@
             "description": "User's categories",
             "example": "Здоровье"
           },
-          "transactionType":{
-              "type":"boolean",
-              "enum": ["income", "expense"]
+          "transactionType": {
+            "type": "boolean",
+            "enum": ["income", "expense"]
           },
           "day": {
             "type": "string",
@@ -747,17 +764,15 @@
             "example": "2020"
           }
         },
-        "example": 
-          {
-            "amount": 50000.00,
-            "description": "БАНЬКА",
-            "category": "Здоровье",
-            "transactionType":"income ore expense",
-            "day": "12",
-            "month": "1",
-            "year": "2021"
+        "example": {
+          "amount": 50000.0,
+          "description": "БАНЬКА",
+          "category": "Здоровье",
+          "transactionType": "income or expense",
+          "day": "12",
+          "month": "1",
+          "year": "2021"
         }
-        
       },
 
       "CategoryRequest": {
@@ -767,11 +782,9 @@
             "type": "string"
           }
         },
-        "example": 
-          {
-            "category": "Select category"
+        "example": {
+          "category": "Select category"
         }
-        
       },
       "CategoryResponse": {
         "type": "object",
@@ -789,9 +802,9 @@
           "category": {
             "type": "string"
           },
-          "transactionType":{
-              "type":"string",
-              "description": "User's type"
+          "transactionType": {
+            "type": "string",
+            "description": "User's type"
           },
           "day": {
             "type": "string",
@@ -811,19 +824,29 @@
             "example": "2020"
           }
         },
-        "example": 
-          {
-            "amount": 50000.00,
-            "description": "БАНЬКА",
-            "transactionType":"income ore expense",
-            "day": "12",
-            "month": "1",
-            "year": "2021"
+        "example": {
+          "balance": 28930,
+          "totalAmountTransactionsByReportMonth": {
+            "totalIncome": 0,
+            "totalExpense": 0
+          },
+          "allTransactionsByTypeForMonth": [],
+          "allTransactionsByUser": [
+            {
+              "_id": "61911a4ccc907925fca347a4",
+              "amount": 500,
+              "description": "БАНЬКА",
+              "category": "Здоровье",
+              "transactionType": "income",
+              "day": 12,
+              "month": 1,
+              "year": 2021
+            }
+          ]
         }
-        
       }
     },
-             "_SECURITY_SCHEMES": "ALL",
+    "_SECURITY_SCHEMES": "ALL",
     "securitySchemes": {
       "BearerAuth": {
         "type": "http",

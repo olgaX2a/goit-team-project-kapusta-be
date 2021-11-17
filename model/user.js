@@ -5,16 +5,16 @@ const userSchema = Schema(
   {
     name: {
       type: String,
-      required: [true, "Name is required"],
+      required: [true, 'Name is required'],
     },
     password: {
       type: String,
-      required: [true, "Password is required"],
+      required: [true, 'Password is required'],
       minlength: 8,
     },
     email: {
       type: String,
-      required: [true, "Email is required"],
+      required: [true, 'Email is required'],
       unique: true,
       minlength: 10,
     },
@@ -28,14 +28,14 @@ const userSchema = Schema(
     },
     verifyToken: {
       type: String,
-      required: [true, "Verify token is required"],
+      // required: [true, 'Verify token is required'],
     },
     balance: {
       type: Number,
       default: 0.0,
     },
   },
-  { versionKey: false, timestamps: true }
+  { versionKey: false, timestamps: true },
 );
 
 const userJoiSchema = Joi.object({
