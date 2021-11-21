@@ -8,7 +8,6 @@ const path = require('path');
 const usersRouter = require('./routes/api/users');
 const categoriesRouter = require('./routes/api/categories');
 const transactionsRouter = require('./routes/api/transactions');
-const sessionsRouter = require('./routes/api/sessions');
 
 const app = express();
 
@@ -19,12 +18,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
-// временно закомментировано для беспроблемного подключения к базе
-
 app.use('/api/users', usersRouter);
 app.use('/api/categories', categoriesRouter);
 app.use('/api/transactions', transactionsRouter);
-// app.use('/api/sessions', sessionsRouter);
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use((req, res) => {

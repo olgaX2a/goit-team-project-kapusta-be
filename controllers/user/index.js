@@ -4,6 +4,7 @@ const login = require('./login');
 const logout = require('./logout');
 const balanceUpdate = require('./balanceUpdate');
 const currentUser = require('./currentUser');
+const balanceUser = require('./balanceUser');
 
 module.exports = {
   registration,
@@ -12,4 +13,5 @@ module.exports = {
   verify,
   balanceUpdate,
   currentUser,
+  balanceUser,
 };

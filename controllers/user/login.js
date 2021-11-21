@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 const { SECRET_KEY } = process.env;
 
 const login = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { email, password } = req.body;
   const user = await User.findOne({ email }, '_id name email balance password verify');
   if (!user) {
     throw new NotFound(`Email ${email} not found`);
