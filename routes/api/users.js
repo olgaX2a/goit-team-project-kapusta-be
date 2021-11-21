@@ -10,6 +10,7 @@ const {
   verify,
   balanceUpdate,
   currentUser,
+  balanceUser,
 } = require('../../controllers/user');
 
 const { controllerWrapper, validation, authenticate } = require('../../middlewares');
@@ -28,6 +29,7 @@ router.patch(
   validation(balanceJoiSchema),
   controllerWrapper(balanceUpdate),
 );
+router.get('/balance', authenticate, controllerWrapper(balanceUser));
 
 router.get('/google', tryCatchWrapper(googleAuth));
 

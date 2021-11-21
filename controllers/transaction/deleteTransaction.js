@@ -1,6 +1,7 @@
 const { Transaction } = require('../../model/index');
 const { User } = require('../../model');
 const { NotFound } = require('http-errors');
+const { SUCCESS } = require('../../helpers/');
 
 const deleteTransaction = async (req, res) => {
   const { _id, balance } = req.user;
@@ -18,7 +19,7 @@ const deleteTransaction = async (req, res) => {
 
   res.json({
     status: 'success',
-    code: 200,
+    code: SUCCESS,
     message: 'Success remove',
     data: {
       transaction,
