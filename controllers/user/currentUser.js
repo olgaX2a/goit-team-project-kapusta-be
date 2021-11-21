@@ -1,10 +1,12 @@
+const { SUCCESS } = require('../../helpers/index');
+
 const currentUser = async (req, res) => {
   const { token, name: userName, email: userEmail, balance } = req.user;
 
   if (token) {
-    res.status(200).json({
+    res.status(SUCCESS).json({
       status: 'authorized',
-      code: 200,
+      code: SUCCESS,
       data: {
         userName,
         userEmail,
