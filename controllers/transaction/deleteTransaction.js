@@ -12,9 +12,9 @@ const deleteTransaction = async (req, res) => {
     throw new NotFound(`Transaction with id=${transactionId} is not found`);
   }
 
-  const { amount, typeTransaction } = transaction;
+  const { amount, transactionType } = transaction;
 
-  const updateAfterDelete = typeTransaction === 'income' ? balance - amount : balance + amount;
+  const updateAfterDelete = transactionType === 'income' ? balance - amount : balance + amount;
   await User.findByIdAndUpdate({ _id }, { balance: updateAfterDelete });
 
   res.json({
