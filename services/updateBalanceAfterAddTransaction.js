@@ -1,10 +1,6 @@
-const updateBalanceAfterAddTransaction = (
-  oldBalance,
-  amount,
-  transactionType
-) => {
+const updateBalanceAfterAddTransaction = (oldBalance, amount, transactionType) => {
   const newBalance =
-    transactionType === "income" ? oldBalance + amount : oldBalance - amount;
+    transactionType === 'income' ? oldBalance + Number(amount) : oldBalance - amount;
   return newBalance;
 };
 
