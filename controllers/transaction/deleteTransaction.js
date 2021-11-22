@@ -14,7 +14,7 @@ const deleteTransaction = async (req, res) => {
 
   const { amount, transactionType } = transaction;
 
-  const updateAfterDelete = transactionType === 'income' ? balance - amount : balance + amount;
+  const updateAfterDelete = transactionType === 'income' ? balance - amount : balance + Number(amount);
   await User.findByIdAndUpdate({ _id }, { balance: updateAfterDelete });
 
   res.json({
