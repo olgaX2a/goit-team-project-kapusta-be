@@ -1,6 +1,7 @@
 const { BadRequest } = require('http-errors');
 const { User, Transaction } = require('../../model/index');
 const { updateBalanceAfterAddTransaction } = require('../../services/index');
+const { CREATED } = require('../../helpers/index');
 
 const addTransaction = async (req, res) => {
   const { _id, balance } = req.user;
@@ -23,9 +24,9 @@ const addTransaction = async (req, res) => {
     balance: newBalance,
   });
 
-  res.status(201).json({
+  res.status(CREATED).json({
     status: 'success',
-    code: 201,
+    code: CREATED,
     data: {
       balance: newBalance,
       transaction: {
