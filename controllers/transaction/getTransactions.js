@@ -6,17 +6,17 @@ const getTransactions = async (req, res) => {
   const { _id, balance } = req.user;
   const { transactionType } = req.params;
 
-  const transactionsById = await transactionFind({ owner: _id });
-  const result = transactionsById.filter(
-    transaction => transaction.transactionType === transactionType,
-  );
-  const totalAmountByMonth = getTotalAmountByMonth(result);
+
+  const transactionsById = await transactionFind({ owner: _id, transactionType });
+
+  const totalAmountByMonth = await getTotalAmountByMonth(transactionsById);
+  
   res.status(SUCCESS).json({
     status: 'success',
     code: SUCCESS,
     balance,
     totalAmountByMonth,
-    data: result,
+    data: transactionsById,
   });
 };
 
