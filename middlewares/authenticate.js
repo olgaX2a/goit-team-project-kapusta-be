@@ -1,25 +1,25 @@
-const jwt = require("jsonwebtoken");
-
-const { User } = require("../model/user.js");
+const jwt = require('jsonwebtoken');
+const { User } = require('../model/user.js');
+const { UNAUTHORIZED } = require('../helpers/index');
 
 const { SECRET_KEY } = process.env;
 
 async function authenticate(req, res, next) {
   const { authorization } = req.headers;
   if (!authorization) {
-    res.status(401).json({
-      status: "error",
-      code: 401,
-      message: "Not authorized",
+    res.status(UNAUTHORIZED).json({
+      status: 'error',
+      code: UNAUTHORIZED,
+      message: 'Not authorized',
     });
     return;
   }
-  const [bearer, token] = authorization.split(" ");
-  if (bearer !== "Bearer") {
-    res.status(401).json({
-      status: "error",
-      code: 401,
-      message: "Not authorized",
+  const [bearer, token] = authorization.split(' ');
+  if (bearer !== 'Bearer') {
+    res.status(UNAUTHORIZED).json({
+      status: 'error',
+      code: UNAUTHORIZED,
+      message: 'Not authorized',
     });
     return;
   }
@@ -27,20 +27,20 @@ async function authenticate(req, res, next) {
     const { _id } = jwt.verify(token, SECRET_KEY);
     const user = await User.findById(_id);
     if (!user.token) {
-      res.status(401).json({
-        status: "error",
-        code: 401,
-        message: "Not authorized",
+      res.status(UNAUTHORIZED).json({
+        status: 'error',
+        code: UNAUTHORIZED,
+        message: 'Not authorized',
       });
       return;
     }
     req.user = user;
     next();
   } catch (error) {
-    res.status(401).json({
-      status: "error",
-      code: 401,
-      message: "Not authorized",
+    res.status(UNAUTHORIZED).json({
+      status: 'error',
+      code: UNAUTHORIZED,
+      message: 'Not authorized',
     });
     return;
   }

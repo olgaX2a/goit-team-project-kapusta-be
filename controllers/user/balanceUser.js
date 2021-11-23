@@ -1,12 +1,13 @@
 const { User } = require('../../model/index');
+const { SUCCESS } = require('../../helpers/index');
 
 const balanceUser = async (req, res) => {
   const { _id } = req.user;
 
   const { balance } = await User.findById(_id);
-  res.status(200).json({
+  res.status(SUCCESS).json({
     status: 'success',
-    code: 200,
+    code: SUCCESS,
     balance,
   });
 };

@@ -1,4 +1,5 @@
 const { transactionFind, totalAmountTransactionByOneMonth } = require('../../services/index');
+const { CREATED } = require('../../helpers/index');
 
 const getCategory = async (req, res) => {
   const { month, year, transactionType } = req.query;
@@ -16,9 +17,9 @@ const getCategory = async (req, res) => {
     transaction => transaction.transactionType === transactionType,
   );
 
-  res.status(201).json({
+  res.status(CREATED).json({
     status: 'success',
-    code: 201,
+    code: CREATED,
     month,
     year,
     balance,

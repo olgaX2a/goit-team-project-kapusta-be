@@ -1,7 +1,8 @@
-const { User } = require('../../model/user.js');
-const { BadRequest, NotFound } = require('http-errors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const { User } = require('../../model/user.js');
+const { BadRequest, NotFound } = require('http-errors');
+const { SUCCESS } = require('../../helpers/index');
 
 const { SECRET_KEY } = process.env;
 
@@ -26,7 +27,7 @@ const login = async (req, res) => {
   await User.findByIdAndUpdate(_id, { token });
   res.json({
     status: 'success',
-    code: 200,
+    code: SUCCESS,
     data: {
       userName,
       userEmail,
